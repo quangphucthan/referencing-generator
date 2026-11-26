@@ -11,7 +11,7 @@ Research for building a referencing generator. It covers how each style formats 
 
 1. [Implementation note](#implementation-note)
 2. [Sample sources](#sample-sources)
-3. [Quick comparison](#quick-comparison)
+3. [Quick comparison](#quick-comparison) · [Books vs webpages](#books-vs-webpages)
 4. Author-date styles: [APA 7](#apa-7th-edition) · [Harvard (Cite Them Right)](#harvard-generic--cite-them-right) · [RMIT Harvard](#rmit-harvard-easy-cite)
 5. Author-page and notes styles: [MLA 9](#mla-9th-edition) · [Chicago 18 notes-bibliography](#chicago-18th-edition--notes-and-bibliography) · [Chicago 18 author-date](#chicago-18th-edition--author-date) · [Turabian](#turabian)
 6. Numeric styles: [Vancouver](#vancouver) · [IEEE](#ieee)
@@ -67,6 +67,26 @@ These sources are fictional. Every style below formats the same six, so the styl
 | Chicago 18 author-date | author-date | (Nguyen et al. 2021, 220) | 3+ ✅ | 7+: first 3 + et al. ✅ | Title Case, "double quotes" | `https://doi.org/…` | only if undated |
 | Vancouver | numeric | (1), [1] or ¹ | n/a | more than 6: first 6 + et al. (ICMJE); NLM now lists all ⚠️ | sentence case, plain | `doi:10.…` | `[cited 2026 Nov 2]` |
 | IEEE | numeric | [1] | n/a | more than 6: first + et al. ✅ | sentence case, "double quotes" | `doi: 10.…` ✅ | `Accessed: Nov. 2, 2026.` ✅ |
+
+---
+
+## Books vs webpages
+
+A webpage is formatted differently from a book in all eight styles. A book has an edition, a publisher and usually a place. A webpage adds a website name, often a fuller date, and in most styles a URL, an access date or a label. Compare S2 and S4 under each style.
+
+Researched 2026-11-26, mostly from university library guides, because the official style sites were blocked to the agent. Only the RMIT row was checked on the style owner's own guide.
+
+| Style | What a webpage has instead | Evidence |
+|---|---|---|
+| APA 7 | The fullest date, e.g. `(2023, March 14)`; the site name, left out if it is the author; a retrieval date only for pages designed to change | Search results only ⚠️ |
+| Cite Them Right | `Available at: URL (Accessed: date)`, year only | Not confirmed for webpages ⚠️ |
+| RMIT Harvard | `Title, Site Name website, accessed Day Month Year. URL`, with no `[webpage]` label | Live Easy Cite guide ✅ |
+| MLA 9 | Quoted page title; italic website name as the container; URL without `https://`; access date only if undated or changeable | Library guide |
+| Chicago 18 | Quoted page title; site name in roman; full date; access date only if undated. Notes style often leaves webpages out of the bibliography | Library guides |
+| Vancouver | `[Internet]` after the title, `[cited …]`, `Available from: URL` | Search results only ⚠️ |
+| IEEE | Quoted page title; website title; `Accessed: … [Online]. Available: URL` | Library guide |
+
+**A pasted link is not always a webpage.** A journal article with a DOI is cited as a journal article, an e-book as a book, and an organisation's report as a report. A news article is treated as a webpage in APA; other styles weren't checked. So a generator has to classify a link before it formats it: use the DOI's metadata, a book's ISBN metadata, or the page's own metadata, in that order. It should fall back to webpage and let the user change the type ⚠️.
 
 ---
 
@@ -233,20 +253,25 @@ Verified against the live Easy Cite page, 2026-11-21 ✅.
 - **No page numbers:** use alternative locators, such as a section or paragraph.
 
 ### Reference list
-- **Heading:** "References" ⚠️.
+Ticked rules were checked against the live Easy Cite page on 2026-11-21 or 2026-11-26.
+
+- **Heading:** "References", on a new page ✅.
+- **Order:** alphabetical by first author's family name ✅.
 - **Authors:**
-  - Name format is `Surname AB`: no full stops, no spaces between initials, no comma after the surname.
-  - Use `and` before the last author.
+  - Name format is `Surname AB`: no full stops, no spaces between initials, no comma after the surname ✅.
+  - Use `and` before the last author, with no comma before it ✅.
   - **List all authors** ✅.
-- **Year:** in parentheses after the authors.
-- **Titles:** articles and chapters in 'single quotes'; journal, book and website names in *italic*; sentence case throughout.
-- **Journals:** `volume(issue):pages` (e.g. `32(11):590-620`). An article number is written `518:Article 145905` ✅.
+- **Year:** in parentheses after the authors ✅.
+- **Titles:** articles and chapters in 'single quotes'; journal and book titles in *italic* ✅. The guide's examples use sentence case, but it states that rule only for some source types.
+- **Quote marks:** the guide mostly uses straight quotes, with at least one example in curly quotes.
+- **Journals:** `volume(issue):pages` (e.g. `32(11):590-620`, with a hyphen). An article number is written `518:Article 145905` ✅.
 - **DOI:** `doi:10.…` at the end ✅.
-- **Webpages:** `*Title*, Site Name website, accessed 9 December 2021. URL`, with no full stop after the URL ✅.
+- **Webpages:** `*Title*, Site Name website, accessed 9 December 2021. URL`, with no full stop after the URL and no `[webpage]` label ✅. If the organisation is both author and site, the site name is shortened ✅.
 - **Editors:** `(ed)`/`(eds)`, with no full stop ✅.
 - **Edition:** `6th edn` ✅.
 - **Books:** `Publisher, Place.` Drop the place when there is a DOI ✅.
 - **Chapter page ranges:** not part of RMIT's chapter rule ✅.
+- **Online conference papers:** `Author (Day Month Year of conference) 'Title of paper' [conference presentation], *Name of Conference*, City, accessed Day Month Year. URL`. From a library database, the ending is `Name of Database database.` instead of the URL ✅. Printed proceedings follow the chapter rule ✅.
 
 ### Examples
 | | Reference list entry | In-text |
@@ -256,9 +281,9 @@ Verified against the live Easy Cite page, 2026-11-21 ✅.
 | S3 | Lee DK (2020) 'Plagiarism and academic integrity', in Garcia M and Chen W (eds) *Handbook of research ethics*, Routledge, London. | (Lee 2020) |
 | S4 | Australian Government Department of Education (2023) *Higher education statistics*, Department of Education website, accessed 2 November 2026. https://www.example.gov.au/higher-education-statistics | (Australian Government Department of Education 2023) |
 | S5 | Kowalski A, Ortiz B, Martin C, Ito D, Rossi E, Haddad F, Okafor G and Lambert H (2022) 'Open peer review at scale', *Research Integrity*, 9(1):Article e1042, doi:10.1234/ri.2022.e1042. | (Kowalski et al. 2022) |
-| S6 | Alvarez S and Tanaka K (Day Month 2023) 'Automated reference extraction from PDFs' [conference paper], *International Conference on Digital Libraries*, Lisbon, Portugal, accessed Day Month Year. URL ⚠️ | (Alvarez and Tanaka 2023) |
+| S6 | Alvarez S and Tanaka K (Day Month 2023) 'Automated reference extraction from PDFs' [conference presentation], *International Conference on Digital Libraries (ICDL 2023)*, Lisbon, accessed Day Month Year. URL ⚠️ | (Alvarez and Tanaka 2023) |
 
-- **S6:** follows the guide's rule `Author (Day Month Year of conference) 'Title of paper' [format], *Name of Conference*, Place of Conference, accessed Day Month Year. URL`. The sample has no conference day and month, access date or URL, so those stay as placeholders. The `[conference paper]` label and the use of this rule for a paper with a DOI are ⚠️.
+- **S6:** follows the online conference paper rule. The sample has no conference day and month, access date or URL, so those stay as placeholders. The guide doesn't say what to do with a conference paper's DOI ⚠️.
 
 ### RMIT Harvard vs Cite Them Right
 
@@ -625,13 +650,18 @@ Resolve these before implementing the affected style.
 2. **IEEE:** confirm the Reference Guide version (v11.29.2023 or v3.28.2025) and where a webpage's publication date goes.
 3. **Vancouver:** default author limit (first 6 + et al., per ICMJE, or list all, per NLM).
 4. **RMIT Harvard:**
-   - Layout for a conference paper that has a DOI, and the `[format]` label.
+   - What to do with a conference paper's DOI.
+   - Whether sentence case applies to every title.
 5. **MLA 9:** comma or full stop before a DOI, and the author-is-publisher rule.
 6. **Chicago 18:**
    - Access-date policy for websites.
    - Proceedings-paper layout.
 7. **Turabian 10:** publication date, and which Chicago edition it follows.
-8. **Part B styles:** whether AGLC5, OSCOLA 5 or a newer ASA edition has been released.
+8. **Webpage entries (S4):**
+   - MLA 9: whether an italic website name is needed when the organisation is author, publisher and site.
+   - IEEE: S4 has no website title, which IEEE's web format includes. S4's metadata names no site, so it may be a missing detail.
+   - Cite Them Right 13th edition: whether books still take a place of publication.
+9. **Part B styles:** whether AGLC5, OSCOLA 5 or a newer ASA edition has been released.
 
 **General rule:** never invent missing metadata (place, publisher, month). Omit it, or use the style's placeholder, such as Vancouver's `[place unknown]` or Harvard's `no date`.
 
@@ -640,7 +670,7 @@ Resolve these before implementing the affected style.
 ## Sources
 
 **Read directly while checking the agents' work**
-- RMIT Easy Cite, RMIT Harvard guide (live page, fetched 2026-11-21): <https://www.lib.rmit.edu.au/easy-cite/?styleguide=styleguide-1>
+- RMIT Easy Cite, RMIT Harvard guide (live page, read 2026-11-21 and 2026-11-26): <https://www.lib.rmit.edu.au/easy-cite/?styleguide=styleguide-1>
 - CSE Citation Quick Guide: <https://www.csemanual.org/Tools/CSE-Citation-Quick-Guide.html>
 - CSL styles repository (`apa`, `harvard-cite-them-right`, `rmit-university-harvard`, `ieee`, `modern-language-association`, `chicago-notes-bibliography`, `chicago-author-date`): <https://github.com/citation-style-language/styles>
 

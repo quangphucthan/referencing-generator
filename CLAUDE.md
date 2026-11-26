@@ -33,4 +33,7 @@ Every style formats the same six fictional sources (S1–S6). The entries were c
 
 ## Git
 
-Don't commit `.claude/` or `CLAUDE.local.md`. The rule that ignores them may not be in this repo, so check `git status` before staging. `CLAUDE.md` and `AGENTS.md` are meant to be tracked. Research and project docs go in `docs/`.
+Don't commit `.claude/`, `CLAUDE.local.md`, `subagent-docs/` or `handoff/`. The rules that ignore them live in the owner's global ignore file, not this repo, so on another machine check `git status` before staging. `CLAUDE.md` and `AGENTS.md` are meant to be tracked.
+
+- **`docs/`** holds project reference docs that are committed.
+- **`subagent-docs/`** is local only. Any doc a subagent task produces goes here: research reports, plans, briefs, build logs. The UX research and the Figma prototype plan are already there.
