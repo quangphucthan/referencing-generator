@@ -26,7 +26,7 @@ README.md
 | Build | esbuild |
 | Type check | `tsc --noEmit` |
 | Tests | `node --test` |
-| Engine | CSL styles rendered by citeproc-js, for now (see Design constraints) |
+| Engine | CSL styles rendered by citeproc-js 2.4.63 (pinned) |
 | Hosting | Cloudflare Workers with static assets |
 
 ## The spec: docs/referencing-styles.md
@@ -45,8 +45,14 @@ Every style formats the same six fictional sources (S1–S6). The entries were c
 
 ## Design constraints
 
-- **The engine is CSL for now, not final.** A second spike must pass before anything is built on it: Chicago notes, IEEE numbering, the APA placeholder policy, and citeproc running in a browser. If it fails, write the rules by hand in TypeScript.
-- **CSL doesn't flag missing details.** In the first spike, gaps showed only through placeholder values. So the app must decide, for each style and source type, which empty fields get a placeholder.
+- **The engine is CSL**, chosen after two spikes. Build one engine per style and reuse it. Building one takes about 0.5 s for APA or Chicago, while rendering takes milliseconds.
+- **CSL doesn't flag missing details.**
+  - Gaps show only through placeholder values, so the app keeps its own list of the details each style needs for each source type.
+  - Filling every empty field creates false gaps.
+  - A placeholder shows only if the style's layout prints that detail.
+- **Placeholder markers contain no letters**, for example `⟦3⟧`. Styles change the case of text: APA re-cased a placeholder made of letters.
+- **The app supplies short titles and journal abbreviations.** citeproc doesn't shorten titles for Chicago short notes or abbreviate journal names for IEEE.
+- **Sources not cited in the text drop out of the reference list** unless the app registers them separately.
 - **Don't use the published `rmit-university-harvard.csl` unpatched.** It follows superseded rules. The live RMIT Easy Cite guide is the authority.
 - **"Harvard" is not one style.** Cite Them Right and RMIT Harvard differ in "et al." thresholds, author names, page locators and DOI format. Keep them as separate named styles.
 - **Chicago 17 and 18 have different author limits**, so the edition is part of the style's identity.
